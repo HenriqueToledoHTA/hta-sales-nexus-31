@@ -65,7 +65,7 @@ export default {
 				},
 				// Custom theme colors
 				hta: {
-					// Burnt yellow as highlight color
+					// Amber as the new highlight color (from the screenshots)
 					highlight: '#F5A623',
 					'highlight-hover': '#E69710',
 					dark: '#121212',

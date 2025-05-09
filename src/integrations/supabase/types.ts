@@ -100,6 +100,97 @@ export type Database = {
           },
         ]
       }
+      leads_duplicate: {
+        Row: {
+          _links: string | null
+          account_id: number | null
+          closed_at: string | null
+          closest_task_at: string | null
+          created_at: string | null
+          created_by: number | null
+          custom_fields_values: string | null
+          group_id: number | null
+          id: number
+          is_deleted: boolean | null
+          labor_cost: number | null
+          loss_reason_id: number | null
+          name: string | null
+          pipeline_id: number | null
+          price: number | null
+          responsible_user_id: number | null
+          score: number | null
+          status_id: number | null
+          updated_at: string | null
+          updated_by: number | null
+        }
+        Insert: {
+          _links?: string | null
+          account_id?: number | null
+          closed_at?: string | null
+          closest_task_at?: string | null
+          created_at?: string | null
+          created_by?: number | null
+          custom_fields_values?: string | null
+          group_id?: number | null
+          id: number
+          is_deleted?: boolean | null
+          labor_cost?: number | null
+          loss_reason_id?: number | null
+          name?: string | null
+          pipeline_id?: number | null
+          price?: number | null
+          responsible_user_id?: number | null
+          score?: number | null
+          status_id?: number | null
+          updated_at?: string | null
+          updated_by?: number | null
+        }
+        Update: {
+          _links?: string | null
+          account_id?: number | null
+          closed_at?: string | null
+          closest_task_at?: string | null
+          created_at?: string | null
+          created_by?: number | null
+          custom_fields_values?: string | null
+          group_id?: number | null
+          id?: number
+          is_deleted?: boolean | null
+          labor_cost?: number | null
+          loss_reason_id?: number | null
+          name?: string | null
+          pipeline_id?: number | null
+          price?: number | null
+          responsible_user_id?: number | null
+          score?: number | null
+          status_id?: number | null
+          updated_at?: string | null
+          updated_by?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_duplicate_pipeline_id_fkey"
+            columns: ["pipeline_id"]
+            isOneToOne: false
+            referencedRelation: "pipelines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_duplicate_responsible_user_id_fkey"
+            columns: ["responsible_user_id"]
+            isOneToOne: false
+            referencedRelation: "seller_sales_summary"
+            referencedColumns: ["seller_id"]
+          },
+          {
+            foreignKeyName: "leads_duplicate_responsible_user_id_fkey"
+            columns: ["responsible_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pipeline_statuses: {
         Row: {
           pipeline_id: number

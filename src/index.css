@@ -14,7 +14,8 @@
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 35 90% 55%;
+    /* Changed primary from hue 35 to amber 40 */
+    --primary: 40 90% 55%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 240 3.7% 15.9%;
@@ -23,7 +24,8 @@
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 35 90% 55%;
+    /* Changed accent from hue 35 to amber 40 */
+    --accent: 40 90% 55%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -31,18 +33,18 @@
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 35 90% 55%;
+    --ring: 40 90% 55%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 240 10% 3.9%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 35 90% 55%;
+    --sidebar-primary: 40 90% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 35 90% 55%;
+    --sidebar-ring: 40 90% 55%;
   }
 }
 
