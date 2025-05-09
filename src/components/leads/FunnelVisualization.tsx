@@ -90,7 +90,7 @@ export default function FunnelVisualization() {
   useEffect(() => {
     setAnimatedStages([]);
     
-    // Animate in the stages one after another
+    // Stagger animate in the stages
     const timer = setTimeout(() => {
       setAnimatedStages(stages);
     }, 300);
@@ -100,34 +100,35 @@ export default function FunnelVisualization() {
 
   return (
     <div className="rounded-lg card-gradient border border-hta-gray-dark overflow-hidden">
-      <div className="p-4">
+      <div className="p-6">
+        <h2 className="text-lg font-bold mb-6">Funil de Conversão</h2>
+        
         {animatedStages.map((stage, index) => (
-          <div key={stage.id} className="mb-4 last:mb-0">
-            <div className="flex justify-between items-center mb-1">
+          <div key={stage.id} className="mb-8 last:mb-0">
+            <div className="flex items-center justify-between mb-2">
               <div className="flex items-center">
                 <div className={cn(
-                  "w-5 h-5 flex items-center justify-center rounded-sm text-xs font-medium mr-2",
+                  "w-6 h-6 flex items-center justify-center rounded-sm text-xs font-medium mr-2",
                   stage.id === 8 ? "bg-green-600" : "bg-amber-600"
                 )}>
                   {stage.id}
                 </div>
-                <span className="font-medium text-sm">{stage.name}</span>
-                <span className="ml-4 text-sm font-bold">{stage.leads} leads</span>
+                <span className="font-medium">{stage.name}</span>
               </div>
-              <span className="text-sm font-bold">{stage.leads} leads</span>
+              <span className="font-bold">{stage.leads} leads</span>
             </div>
             
             {/* Progress bar */}
-            <div className="relative h-8 mb-1">
+            <div className="relative h-10 mb-2 rounded-md overflow-hidden">
               <div className="absolute inset-0 bg-hta-dark-card rounded-md"></div>
               <div 
                 className={cn(
-                  "absolute h-full rounded-md transition-all duration-1000",
+                  "absolute h-full rounded-md transition-all duration-1000 ease-out",
                   stage.id === 8 ? "bg-green-600" : "bg-amber-600"
                 )}
                 style={{ width: `${stage.percentage}%` }}
               >
-                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xs font-bold">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sm font-bold text-white">
                   {stage.percentage.toFixed(1)}%
                 </span>
               </div>
@@ -135,11 +136,8 @@ export default function FunnelVisualization() {
             
             {/* Transition arrow */}
             {index < stages.length - 1 && (
-              <div className="flex items-center ml-6 mb-2">
-                <div className="h-6 border-l border-dashed border-hta-gray-medium"></div>
-                <div className="ml-2 text-xs text-muted-foreground">
-                  → {stage.transition.count} leads ({stage.transition.percentage.toFixed(1)}%)
-                </div>
+              <div className="flex items-center justify-end mb-3 pr-2 text-sm text-gray-400">
+                → {stage.transition.count} leads ({stage.transition.percentage.toFixed(1)}%)
               </div>
             )}
           </div>

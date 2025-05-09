@@ -64,47 +64,47 @@ export default function FunnelTransitions() {
 
   // Helper function to determine the color class for conversion rate
   const getConversionRateColor = (rate: number) => {
-    if (rate >= 50) return "bg-green-600 text-white";
-    if (rate >= 25) return "bg-amber-600 text-white";
-    return "bg-red-600 text-white";
+    if (rate >= 50) return "bg-green-600";
+    if (rate >= 25) return "bg-amber-600";
+    return "bg-red-600";
   };
 
   return (
-    <div className="rounded-lg card-gradient border border-hta-gray-dark p-4">
-      <h2 className="text-lg font-bold mb-4">Transições entre etapas sequenciais (7 transições encontradas)</h2>
+    <div className="rounded-lg card-gradient border border-hta-gray-dark p-6">
+      <h2 className="text-lg font-bold mb-6">Transições entre etapas sequenciais (7 transições encontradas)</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="flex flex-col space-y-4">
         {transitions.map((transition) => (
           <div 
             key={`${transition.fromStage.id}-${transition.toStage.id}`}
-            className="bg-hta-dark-card border border-hta-gray-dark rounded-lg p-3"
+            className="bg-hta-dark-card border border-hta-gray-dark rounded-md p-4"
           >
-            <div className="flex items-center">
+            <div className="flex flex-wrap items-center gap-2">
               <div className="flex items-center">
                 <span className="inline-flex items-center justify-center w-6 h-6 bg-amber-600 rounded-sm text-xs text-white font-medium">
                   {transition.fromStage.id}
                 </span>
-                <span className="ml-2 text-sm">{transition.fromStage.name}</span>
+                <span className="ml-2">{transition.fromStage.leads} leads</span>
               </div>
-              <span className="mx-2 text-gray-400">{transition.fromStage.leads} leads</span>
-              <span className="mx-2">→</span>
+              
+              <span className="mx-2 text-gray-400">→</span>
+              
               <div className="flex items-center">
                 <span className="inline-flex items-center justify-center w-6 h-6 bg-amber-600 rounded-sm text-xs text-white font-medium">
                   {transition.toStage.id}
                 </span>
-                <span className="ml-2 text-sm">{transition.toStage.name}</span>
               </div>
-            </div>
-            
-            <div className="mt-2 flex justify-end">
-              <span 
-                className={cn(
-                  "text-xs py-1 px-2 rounded",
-                  getConversionRateColor(transition.conversionRate)
-                )}
-              >
-                {transition.conversionRate.toFixed(1)}%
-              </span>
+              
+              <div className="ml-auto">
+                <span 
+                  className={cn(
+                    "inline-block px-3 py-1 rounded text-sm text-white font-medium",
+                    getConversionRateColor(transition.conversionRate)
+                  )}
+                >
+                  {transition.conversionRate.toFixed(1)}%
+                </span>
+              </div>
             </div>
           </div>
         ))}

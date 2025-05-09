@@ -11,20 +11,19 @@ export default function LeadsFunnelMetrics() {
     {
       title: "Etapa com mais leads",
       value: "Etapa 3 (1331)",
-      subtext: "47.1%",
+      subtext: "44.3%",
       highlight: true
     },
     {
       title: "Melhor conversão",
-      value: "Etapa 2: DISPAROU FORMS",
-      subtext: "47.1%",
+      value: "Etapa 5: QUALIFICADO",
+      subtext: "76.7%",
       highlight: true
     },
     {
       title: "Pior conversão",
-      value: "Etapa 4: PRÉ QUALIFICADO",
-      subtext: "11.1%",
-      highlight: false,
+      value: "Etapa 1: COMPROU FELPUDO",
+      subtext: "8.2%",
       negative: true
     }
   ];
@@ -32,10 +31,17 @@ export default function LeadsFunnelMetrics() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {metrics.map((metric, index) => (
-        <Card key={index} className="bg-hta-dark-card border-hta-gray-dark overflow-hidden">
+        <Card 
+          key={index} 
+          className={cn(
+            "bg-hta-dark-card border-hta-gray-dark overflow-hidden",
+            metric.highlight ? "border-l-4 border-l-hta-highlight" : "",
+            metric.negative ? "border-l-4 border-l-red-500" : ""
+          )}
+        >
           <CardContent className="p-4">
             <h3 className="text-sm text-muted-foreground">{metric.title}</h3>
-            <p className={`text-xl font-bold mt-1 ${metric.highlight ? 'text-hta-highlight' : ''} ${metric.negative ? 'text-red-500' : ''}`}>
+            <p className={`text-xl font-bold mt-2 ${metric.highlight ? 'text-hta-highlight' : ''} ${metric.negative ? 'text-red-500' : ''}`}>
               {metric.value}
             </p>
             {metric.subtext && (
@@ -48,4 +54,9 @@ export default function LeadsFunnelMetrics() {
       ))}
     </div>
   );
+}
+
+// Helper function to conditionally join class names
+function cn(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
 }
