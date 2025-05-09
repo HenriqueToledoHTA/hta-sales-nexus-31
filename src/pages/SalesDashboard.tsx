@@ -8,6 +8,7 @@ import RecentSales from "../components/dashboard/RecentSales";
 import ProductDistributionChart from "../components/dashboard/ProductDistributionChart";
 import DistributionPieChart from "../components/dashboard/DistributionPieChart";
 import SalesGoal from "../components/dashboard/SalesGoal";
+import MongoLeadsList from "../components/leads/MongoLeadsList"; // Import the new component
 import { 
   fetchSalesStats, 
   formatCurrency, 
@@ -149,6 +150,9 @@ export default function SalesDashboard() {
             sales={recentSales} 
             isLoading={recentSalesLoading} 
           />
+          
+          {/* MongoDB Leads List - Add the new component here */}
+          <MongoLeadsList />
         </div>
         
         {/* Right column */}
