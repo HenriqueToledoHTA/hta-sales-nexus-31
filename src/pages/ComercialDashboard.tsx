@@ -265,38 +265,36 @@ export default function ComercialDashboard() {
             </CardHeader>
             <CardContent>
               {!isLoading ? (
-                <ChartContainer className="h-[300px]" config={{ call: { color: '#F5A623' } }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={mockDailyCallsData}
-                      margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                      <XAxis 
-                        dataKey="date"
-                        stroke="#999" 
-                        tick={{ fill: '#999' }}
-                        angle={-45}
-                        textAnchor="end"
-                        height={70}
-                      />
-                      <YAxis stroke="#999" tick={{ fill: '#999' }} />
-                      <Tooltip 
-                        content={({ active, payload }) => {
-                          if (active && payload && payload.length) {
-                            return (
-                              <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
-                                <p className="text-sm text-gray-400">{`${payload[0].payload.date}`}</p>
-                                <p className="text-sm text-white">{`Calls: ${payload[0].value}`}</p>
-                              </div>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                      <Bar dataKey="scheduled" name="Calls" fill="#F5A623" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
+                <ChartContainer className="h-[300px]" config={{ scheduled: { color: '#F5A623' } }}>
+                  <BarChart
+                    data={mockDailyCallsData}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                    <XAxis 
+                      dataKey="date"
+                      stroke="#999" 
+                      tick={{ fill: '#999' }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={70}
+                    />
+                    <YAxis stroke="#999" tick={{ fill: '#999' }} />
+                    <Tooltip 
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
+                              <p className="text-sm text-gray-400">{`${payload[0].payload.date}`}</p>
+                              <p className="text-sm text-white">{`Calls: ${payload[0].value}`}</p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Bar dataKey="scheduled" name="Calls" fill="#F5A623" radius={[4, 4, 0, 0]} />
+                  </BarChart>
                 </ChartContainer>
               ) : (
                 <div className="h-[300px] flex items-center justify-center">
@@ -316,38 +314,36 @@ export default function ComercialDashboard() {
             </CardHeader>
             <CardContent>
               {!isLoading ? (
-                <ChartContainer className="h-[300px]" config={{ call: { color: '#F5A623' } }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={mockDailyCallsData}
-                      margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                      <XAxis 
-                        dataKey="date"
-                        stroke="#999" 
-                        tick={{ fill: '#999' }}
-                        angle={-45}
-                        textAnchor="end"
-                        height={70}
-                      />
-                      <YAxis stroke="#999" tick={{ fill: '#999' }} />
-                      <Tooltip 
-                        content={({ active, payload }) => {
-                          if (active && payload && payload.length) {
-                            return (
-                              <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
-                                <p className="text-sm text-gray-400">{`${payload[0].payload.date}`}</p>
-                                <p className="text-sm text-white">{`Realizadas: ${payload[0].value}`}</p>
-                              </div>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                      <Bar dataKey="completed" name="Realizadas" fill="#4CAF50" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
+                <ChartContainer className="h-[300px]" config={{ completed: { color: '#4CAF50' } }}>
+                  <BarChart
+                    data={mockDailyCallsData}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                    <XAxis 
+                      dataKey="date"
+                      stroke="#999" 
+                      tick={{ fill: '#999' }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={70}
+                    />
+                    <YAxis stroke="#999" tick={{ fill: '#999' }} />
+                    <Tooltip 
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
+                              <p className="text-sm text-gray-400">{`${payload[0].payload.date}`}</p>
+                              <p className="text-sm text-white">{`Realizadas: ${payload[0].value}`}</p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Bar dataKey="completed" name="Realizadas" fill="#4CAF50" radius={[4, 4, 0, 0]} />
+                  </BarChart>
                 </ChartContainer>
               ) : (
                 <div className="h-[300px] flex items-center justify-center">
@@ -403,37 +399,35 @@ export default function ComercialDashboard() {
             <CardContent>
               {!isLoading ? (
                 <ChartContainer className="h-[300px]" config={{ value: { color: '#F5A623' } }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      layout="vertical"
-                      data={mockProfessionData}
-                      margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                      <XAxis type="number" stroke="#999" tick={{ fill: '#999' }} />
-                      <YAxis 
-                        dataKey="name" 
-                        type="category" 
-                        width={80} 
-                        stroke="#999" 
-                        tick={{ fill: '#999' }}
-                        tickFormatter={(value) => value.length > 10 ? `${value.substring(0, 10)}...` : value}
-                      />
-                      <Tooltip
-                        content={({ active, payload }) => {
-                          if (active && payload && payload.length) {
-                            return (
-                              <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
-                                <p className="text-sm text-white">{`${payload[0].payload.name}: ${payload[0].value}`}</p>
-                              </div>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                      <Bar dataKey="value" fill="#F5A623" radius={[0, 4, 4, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  <BarChart
+                    layout="vertical"
+                    data={mockProfessionData}
+                    margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                    <XAxis type="number" stroke="#999" tick={{ fill: '#999' }} />
+                    <YAxis 
+                      dataKey="name" 
+                      type="category" 
+                      width={80} 
+                      stroke="#999" 
+                      tick={{ fill: '#999' }}
+                      tickFormatter={(value) => value.length > 10 ? `${value.substring(0, 10)}...` : value}
+                    />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
+                              <p className="text-sm text-white">{`${payload[0].payload.name}: ${payload[0].value}`}</p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Bar dataKey="value" fill="#F5A623" radius={[0, 4, 4, 0]} />
+                  </BarChart>
                 </ChartContainer>
               ) : (
                 <div className="h-[300px] flex items-center justify-center">
@@ -453,38 +447,36 @@ export default function ComercialDashboard() {
             </CardHeader>
             <CardContent>
               {!isLoading ? (
-                <ChartContainer className="h-[300px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={mockRevenueData}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        innerRadius={60}
-                        outerRadius={100}
-                        fill="#8884d8"
-                        dataKey="value"
-                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                      >
-                        {mockRevenueData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        content={({ active, payload }) => {
-                          if (active && payload && payload.length) {
-                            return (
-                              <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
-                                <p className="text-sm text-white">{`${payload[0].name}: ${payload[0].value}`}</p>
-                              </div>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
+                <ChartContainer className="h-[300px]" config={{ pie: { color: '#F5A623' } }}>
+                  <PieChart>
+                    <Pie
+                      data={mockRevenueData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      innerRadius={60}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {mockRevenueData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
+                              <p className="text-sm text-white">{`${payload[0].name}: ${payload[0].value}`}</p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                  </PieChart>
                 </ChartContainer>
               ) : (
                 <div className="h-[300px] flex items-center justify-center">
@@ -505,37 +497,35 @@ export default function ComercialDashboard() {
             <CardContent>
               {!isLoading ? (
                 <ChartContainer className="h-[250px]" config={{ sales: { color: '#4CAF50' } }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={mockDailyCallsData}
-                      margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                      <XAxis 
-                        dataKey="date"
-                        stroke="#999" 
-                        tick={{ fill: '#999' }}
-                        angle={-45}
-                        textAnchor="end"
-                        height={70}
-                      />
-                      <YAxis stroke="#999" tick={{ fill: '#999' }} />
-                      <Tooltip
-                        content={({ active, payload }) => {
-                          if (active && payload && payload.length) {
-                            return (
-                              <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
-                                <p className="text-sm text-gray-400">{`${payload[0].payload.date}`}</p>
-                                <p className="text-sm text-white">{`Vendas: ${payload[0].value}`}</p>
-                              </div>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                      <Bar dataKey="sales" name="Vendas" fill="#4CAF50" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  <BarChart
+                    data={mockDailyCallsData}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                    <XAxis 
+                      dataKey="date"
+                      stroke="#999" 
+                      tick={{ fill: '#999' }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={70}
+                    />
+                    <YAxis stroke="#999" tick={{ fill: '#999' }} />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-hta-dark-card border border-hta-gray-dark p-3 rounded-lg">
+                              <p className="text-sm text-gray-400">{`${payload[0].payload.date}`}</p>
+                              <p className="text-sm text-white">{`Vendas: ${payload[0].value}`}</p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Bar dataKey="sales" name="Vendas" fill="#4CAF50" radius={[4, 4, 0, 0]} />
+                  </BarChart>
                 </ChartContainer>
               ) : (
                 <div className="h-[250px] flex items-center justify-center">
