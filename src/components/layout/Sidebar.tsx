@@ -8,7 +8,8 @@ import {
   TrendingUp, 
   Users,
   Settings,
-  Menu
+  Menu,
+  X
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -45,6 +46,9 @@ export default function Sidebar() {
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth < 768) {
+        setCollapsed(true); // Always collapse on mobile
+      }
     };
     
     checkIsMobile();
@@ -105,7 +109,7 @@ export default function Sidebar() {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="p-2 rounded-md bg-hta-dark-card-hover text-gray-300"
         >
-          <Menu size={20} />
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </header>
       
@@ -128,7 +132,7 @@ export default function Sidebar() {
             onClick={() => setMobileMenuOpen(false)}
             className="p-1 rounded-md hover:bg-hta-dark-card-hover text-gray-400"
           >
-            <ChevronRight size={20} />
+            <X size={20} />
           </button>
         </div>
         
