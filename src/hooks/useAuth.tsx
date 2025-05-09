@@ -5,22 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 
-// Definindo os tipos para o contexto de autenticação
 type AuthContextType = {
   user: User | null;
   session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   updatePassword: (newPassword: string) => Promise<void>;
 };
 
-// Criando o contexto de autenticação
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Provedor do contexto de autenticação
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -28,7 +24,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Efeito para inicializar a sessão e configurar o listener de autenticação
   useEffect(() => {
     // Primeiro configuramos o listener para mudanças de estado de autenticação
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -70,9 +65,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [navigate]);
 
   // Função para login
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string): Promise<void> => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
       
       if (error) {
         console.error("Login error:", error);
@@ -84,8 +79,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: "Você foi autenticado com sucesso.",
         variant: "default",
       });
-      
-      return data;
     } catch (error: any) {
       let message = "Falha ao fazer login";
       if (error.message) {
@@ -106,45 +99,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Função para cadastro
-  const signUp = async (email: string, password: string) => {
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Cadastro realizado",
-        description: "Verifique seu email para confirmar seu cadastro.",
-        variant: "default",
-      });
-
-      return data;
-    } catch (error: any) {
-      let message = "Falha ao criar conta";
-      if (error.message) {
-        if (error.message.includes("already registered")) {
-          message = "Este email já está registrado";
-        } else if (error.message.includes("weak password")) {
-          message = "A senha é muito fraca. Use uma combinação de letras, números e caracteres especiais.";
-        }
-      }
-      
-      toast({
-        title: "Erro no cadastro",
-        description: message,
-        variant: "destructive",
-      });
-      
-      throw error;
-    }
-  };
-
   // Função para logout
-  const signOut = async () => {
+  const signOut = async (): Promise<void> => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
@@ -168,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   // Função para resetar senha
-  const resetPassword = async (email: string) => {
+  const resetPassword = async (email: string): Promise<void> => {
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/reset-password`,
@@ -195,7 +151,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   // Função para atualizar senha
-  const updatePassword = async (newPassword: string) => {
+  const updatePassword = async (newPassword: string): Promise<void> => {
     try {
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
@@ -231,7 +187,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         session,
         loading,
         signIn,
-        signUp,
         signOut,
         resetPassword,
         updatePassword,
@@ -242,7 +197,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Hook para utilizar o contexto de autenticação
 export function useAuth() {
   const context = useContext(AuthContext);
   

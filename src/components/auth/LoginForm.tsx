@@ -87,15 +87,6 @@ export function LoginForm() {
           "Entrar"
         )}
       </Button>
-
-      <div className="text-center mt-4">
-        <span className="text-sm text-muted-foreground">
-          Não tem uma conta?{" "}
-          <Link to="/register" className="text-hta-highlight hover:underline font-medium">
-            Cadastre-se
-          </Link>
-        </span>
-      </div>
     </form>
   );
 }
