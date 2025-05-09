@@ -13,6 +13,7 @@ import ResetPassword from "./pages/ResetPassword";
 import SalesDashboard from "./pages/SalesDashboard";
 import ComercialDashboard from "./pages/ComercialDashboard";
 import LeadsConversion from "./pages/LeadsConversion";
+import MongoLeads from "./pages/MongoLeads"; // New import
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Index";
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/salesdata" element={<ProtectedRoute><SalesDashboard /></ProtectedRoute>} />
             <Route path="/comercial" element={<ProtectedRoute><ComercialDashboard /></ProtectedRoute>} />
             <Route path="/leads" element={<ProtectedRoute><LeadsConversion /></ProtectedRoute>} />
+            <Route path="/mongodb" element={<ProtectedRoute><MongoLeads /></ProtectedRoute>} />
             <Route path="/configuracoes" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
