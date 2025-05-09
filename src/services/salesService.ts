@@ -14,6 +14,16 @@ export interface TopSeller {
   value: number;
 }
 
+export interface RecentSale {
+  id: number;
+  client: string;
+  product: string;
+  value: number;
+  date: string;
+  seller: string;
+  pipeline: string;
+}
+
 export async function fetchSalesStats(): Promise<SalesStats> {
   try {
     // Get total sales (sum of price where price > 0)
@@ -67,6 +77,32 @@ export async function fetchTopSellers(): Promise<TopSeller[]> {
     }));
   } catch (error) {
     console.error("Error fetching top sellers:", error);
+    return [];
+  }
+}
+
+export async function fetchRecentSales(): Promise<RecentSale[]> {
+  try {
+    const { data, error } = await supabase
+      .from('recent_sales_view')
+      .select('*')
+      .order('sale_date', { ascending: false })
+      .limit(10);
+    
+    if (error) throw error;
+    
+    // Transform the data to match the RecentSale interface
+    return data.map(sale => ({
+      id: sale.sale_id,
+      client: sale.client || 'Cliente não identificado',
+      product: sale.product,
+      value: sale.value,
+      date: sale.sale_date,
+      seller: sale.seller_name || 'Não atribuído',
+      pipeline: sale.pipeline_name || 'Pipeline padrão'
+    }));
+  } catch (error) {
+    console.error("Error fetching recent sales:", error);
     return [];
   }
 }

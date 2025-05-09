@@ -233,6 +233,18 @@ export type Database = {
       }
     }
     Views: {
+      recent_sales_view: {
+        Row: {
+          client: string | null
+          pipeline_name: string | null
+          product: string | null
+          sale_date: string | null
+          sale_id: number | null
+          seller_name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
       seller_sales_summary: {
         Row: {
           sales_count: number | null

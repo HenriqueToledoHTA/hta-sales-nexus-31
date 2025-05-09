@@ -11,12 +11,13 @@ import SalesGoal from "../components/dashboard/SalesGoal";
 import { 
   fetchSalesStats, 
   formatCurrency, 
-  fetchTopSellers, 
-  TopSeller 
+  fetchTopSellers,
+  fetchRecentSales,
+  TopSeller,
+  RecentSale
 } from "../services/salesService";
 
 import {
-  recentSales,
   productDistribution,
   professionDistribution,
   acquisitionChannels,
@@ -26,6 +27,7 @@ import {
 export default function SalesDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [topSellersLoading, setTopSellersLoading] = useState(true);
+  const [recentSalesLoading, setRecentSalesLoading] = useState(true);
   const [salesStats, setSalesStats] = useState({
     totalSales: 0,
     totalCustomers: 0,
@@ -35,11 +37,13 @@ export default function SalesDashboard() {
     averageChange: 0
   });
   const [topSellers, setTopSellers] = useState<TopSeller[]>([]);
+  const [recentSales, setRecentSales] = useState<RecentSale[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
       setTopSellersLoading(true);
+      setRecentSalesLoading(true);
       
       try {
         // Fetch sales stats
@@ -67,6 +71,16 @@ export default function SalesDashboard() {
         console.error("Failed to load top sellers data:", error);
       } finally {
         setTopSellersLoading(false);
+      }
+      
+      try {
+        // Fetch recent sales data
+        const sales = await fetchRecentSales();
+        setRecentSales(sales);
+      } catch (error) {
+        console.error("Failed to load recent sales data:", error);
+      } finally {
+        setRecentSalesLoading(false);
       }
     };
     
@@ -128,7 +142,10 @@ export default function SalesDashboard() {
           </div>
           
           {/* Recent sales */}
-          <RecentSales sales={recentSales} />
+          <RecentSales 
+            sales={recentSales} 
+            isLoading={recentSalesLoading} 
+          />
         </div>
         
         {/* Right column */}
