@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { fetchLeads, fetchLeadsByStage } from '../services/mongoService';
 import { useToast } from "@/components/ui/use-toast";
 
-// Define types for leads data
-interface Lead {
+// Export Lead type for use in other modules
+export interface Lead {
   id: number;
   name: string;
   price: number;
