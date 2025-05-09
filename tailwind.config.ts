@@ -65,13 +65,13 @@ export default {
 				},
 				// Custom theme colors
 				hta: {
-					// Amarelo alaranjado como cor de destaque (F5A623)
-					highlight: '#F5A623',
-					'highlight-hover': '#E69710',
+					// Amarelo alaranjado como cor de destaque (atualizando para F8931F mais alaranjado)
+					highlight: '#F8931F',
+					'highlight-hover': '#E68000',
 					dark: '#121212',
-					'dark-card': '#181818',
-					'dark-card-hover': '#222222',
-					'gray-dark': '#333333',
+					'dark-card': '#161616',
+					'dark-card-hover': '#202020',
+					'gray-dark': '#2A2A2A',
 					'gray-medium': '#666666',
 					'gray-light': '#999999',
 					success: '#4CAF50',

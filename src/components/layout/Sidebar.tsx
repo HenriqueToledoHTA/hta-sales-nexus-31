@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { 
   ChevronLeft, 
   ChevronRight,
@@ -21,13 +20,18 @@ type NavItemProps = {
 };
 
 const NavItem = ({ to, icon: Icon, label, isCollapsed }: NavItemProps) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+  
   return (
     <NavLink
       to={to}
       className={({ isActive }) => cn(
         "flex items-center gap-3 px-3 py-2 rounded-md transition-all",
-        "hover:bg-hta-dark-card-hover",
-        isActive ? "bg-hta-dark-card text-hta-highlight" : "text-gray-300",
+        "hover:bg-hta-dark-card-hover text-gray-300 hover:text-hta-highlight",
+        isActive 
+          ? "bg-hta-dark-card text-hta-highlight font-medium" 
+          : "",
         isCollapsed ? "justify-center" : ""
       )}
     >

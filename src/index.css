@@ -8,43 +8,45 @@
     --background: 0 0% 7%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 9.4%;
+    /* Agora um pouco mais escuro: #161616 */
+    --card: 0 0% 8.7%;
     --card-foreground: 0 0% 98%;
 
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
 
-    /* Amarelo alaranjado como cor primária (F5A623) */
-    --primary: 35 91% 55%;
+    /* Amarelo mais alaranjado: #F8931F (mais alaranjado que o anterior) */
+    --primary: 32 94% 55%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 20%;
+    --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 20%;
+    --muted: 0 0% 18%;
     --muted-foreground: 0 0% 65%;
 
-    /* Amarelo alaranjado como cor de destaque */
-    --accent: 35 91% 55%;
+    /* Amarelo mais alaranjado como cor de destaque */
+    --accent: 32 94% 55%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 35 91% 55%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 32 94% 55%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 7%;
+    /* Sidebar mais escuro */
+    --sidebar-background: 0 0% 8.7%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 35 91% 55%;
+    --sidebar-primary: 32 94% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent: 0 0% 18%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 35 91% 55%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 32 94% 55%;
   }
 }
 
