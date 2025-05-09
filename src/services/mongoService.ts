@@ -1,100 +1,128 @@
 
-import { MongoClient, ServerApiVersion, Collection, Db } from 'mongodb';
+// Mock MongoDB data service for browser use
+// In a real application, this would be an API call to your backend
 
-// Connection string should be stored in environment variables in production
-const uri = "mongodb+srv://thiagocleonel:xYfRNhzKILEqB7Zn@test-n8n.u3tbtnr.mongodb.net/";
-const dbName = "test-n8n";
+// Sample lead data structure based on your MongoDB schema
+interface Lead {
+  id: number;
+  name: string;
+  price: number;
+  responsible_user_id: number;
+  group_id: number;
+  status_id: number;
+  pipeline_id: number;
+  loss_reason_id?: number;
+  created_by: number;
+  updated_by: number;
+  created_at: number;
+  updated_at: number;
+  closed_at?: number;
+  closest_task_at?: number | null;
+  is_deleted: boolean;
+  custom_fields_values?: any;
+  score?: any;
+  account_id: number;
+  labor_cost?: any;
+}
 
-// Global variables to store client and db connection
-let client: MongoClient | null = null;
-let database: Db | null = null;
+// Mock data based on the example item
+const mockLeadsData: Lead[] = [
+  {
+    id: 12526052,
+    name: "Lead #12526052",
+    price: 0,
+    responsible_user_id: 10898363,
+    group_id: 0,
+    status_id: 143,
+    pipeline_id: 8289155,
+    loss_reason_id: 20470803,
+    created_by: 0,
+    updated_by: 10898363,
+    created_at: 1724278641,
+    updated_at: 1724298267,
+    closed_at: 1724298267,
+    closest_task_at: null,
+    is_deleted: false,
+    custom_fields_values: null,
+    score: null,
+    account_id: 32490267,
+    labor_cost: null
+  },
+  {
+    id: 12526053,
+    name: "Lead #12526053",
+    price: 1000,
+    responsible_user_id: 10898363,
+    group_id: 0,
+    status_id: 144,
+    pipeline_id: 8289155,
+    created_by: 0,
+    updated_by: 10898363,
+    created_at: 1724278700,
+    updated_at: 1724298300,
+    is_deleted: false,
+    custom_fields_values: null,
+    score: null,
+    account_id: 32490267,
+    labor_cost: null
+  },
+  // Generate additional mock leads
+  ...Array.from({ length: 30 }, (_, i) => ({
+    id: 12526054 + i,
+    name: `Lead #${12526054 + i}`,
+    price: Math.floor(Math.random() * 5000),
+    responsible_user_id: 10898363,
+    group_id: 0,
+    status_id: 140 + Math.floor(Math.random() * 5),
+    pipeline_id: 8289155,
+    created_by: 0,
+    updated_by: 10898363,
+    created_at: 1724278800 + (i * 100),
+    updated_at: 1724298400 + (i * 100),
+    is_deleted: false,
+    custom_fields_values: null,
+    score: null,
+    account_id: 32490267,
+    labor_cost: null
+  }))
+];
 
-// Initialize MongoDB connection
-export async function connectToMongoDB(): Promise<{ client: MongoClient, db: Db }> {
-  if (client && database) {
-    console.log("Using existing connection to MongoDB");
-    return { client, db: database };
-  }
+// Mock data for stage counts
+const mockStageData = [
+  { _id: { status_id: 143, pipeline_id: 8289155 }, count: 10 },
+  { _id: { status_id: 142, pipeline_id: 8289155 }, count: 5 },
+  { _id: { status_id: 141, pipeline_id: 8289155 }, count: 8 },
+  { _id: { status_id: 144, pipeline_id: 8289155 }, count: 12 },
+];
+
+// Simulate an async API call to fetch leads data
+export async function fetchLeads(limit = 20, skip = 0): Promise<Lead[]> {
+  console.log(`Fetching leads with limit: ${limit}, skip: ${skip}`);
   
-  try {
-    console.log("Establishing new connection to MongoDB...");
-    client = new MongoClient(uri, {
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      }
-    });
-    
-    // Connect the client
-    await client.connect();
-    
-    // Send a ping to verify connection
-    database = client.db(dbName);
-    await database.command({ ping: 1 });
-    
-    console.log("Connected successfully to MongoDB");
-    return { client, db: database };
-  } catch (error) {
-    console.error("Failed to connect to MongoDB:", error);
-    throw error;
-  }
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 300));
+  
+  // Return paginated data
+  return mockLeadsData.slice(skip, skip + limit);
 }
 
-// Close MongoDB connection
-export async function closeMongoDB(): Promise<void> {
-  if (client) {
-    await client.close();
-    client = null;
-    database = null;
-    console.log("MongoDB connection closed");
-  }
+// Simulate an async API call to fetch lead by ID
+export async function fetchLeadById(id: number): Promise<Lead | null> {
+  console.log(`Fetching lead with ID: ${id}`);
+  
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 300));
+  
+  const lead = mockLeadsData.find(lead => lead.id === id);
+  return lead || null;
 }
 
-// Get leads collection
-export async function getLeadsCollection(): Promise<Collection> {
-  const { db } = await connectToMongoDB();
-  return db.collection('leads');
-}
-
-// Function to fetch leads data
-export async function fetchLeads(limit = 20, skip = 0): Promise<any[]> {
-  try {
-    const collection = await getLeadsCollection();
-    return await collection.find({}).limit(limit).skip(skip).toArray();
-  } catch (error) {
-    console.error("Error fetching leads from MongoDB:", error);
-    return [];
-  }
-}
-
-// Function to fetch lead by ID
-export async function fetchLeadById(id: number): Promise<any | null> {
-  try {
-    const collection = await getLeadsCollection();
-    return await collection.findOne({ id });
-  } catch (error) {
-    console.error(`Error fetching lead with ID ${id}:`, error);
-    return null;
-  }
-}
-
-// Function to fetch leads count for each pipeline stage
+// Simulate an async API call to fetch leads by stage
 export async function fetchLeadsByStage(): Promise<any[]> {
-  try {
-    const collection = await getLeadsCollection();
-    const pipeline = [
-      {
-        $group: {
-          _id: { status_id: "$status_id", pipeline_id: "$pipeline_id" },
-          count: { $sum: 1 }
-        }
-      }
-    ];
-    
-    return await collection.aggregate(pipeline).toArray();
-  } catch (error) {
-    console.error("Error fetching leads by stage:", error);
-    return [];
-  }
+  console.log('Fetching leads by stage');
+  
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 300));
+  
+  return mockStageData;
 }
