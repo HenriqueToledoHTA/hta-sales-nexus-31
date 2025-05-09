@@ -1,3 +1,4 @@
+import { MongoClient } from 'mongodb';
 
 // Mock MongoDB data service for browser use
 // In a real application, this would be an API call to your backend
@@ -95,34 +96,39 @@ const mockStageData = [
   { _id: { status_id: 144, pipeline_id: 8289155 }, count: 12 },
 ];
 
-// Simulate an async API call to fetch leads data
+// Connection URI
+const uri = process.env.MONGODB_URI || 'your-mongodb-uri';
+
+// Create a new MongoClient
+const client = new MongoClient(uri);
+
+// Connect to the MongoDB server
+async function connectToMongoDB() {
+  if (!client.isConnected()) {
+    await client.connect();
+  }
+  return client.db('your-database-name');
+}
+
+// Fetch leads from MongoDB
 export async function fetchLeads(limit = 20, skip = 0): Promise<Lead[]> {
-  console.log(`Fetching leads with limit: ${limit}, skip: ${skip}`);
-  
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 300));
-  
-  // Return paginated data
-  return mockLeadsData.slice(skip, skip + limit);
+  const db = await connectToMongoDB();
+  const collection = db.collection('leads');
+  return collection.find().skip(skip).limit(limit).toArray();
 }
 
-// Simulate an async API call to fetch lead by ID
+// Fetch a lead by ID from MongoDB
 export async function fetchLeadById(id: number): Promise<Lead | null> {
-  console.log(`Fetching lead with ID: ${id}`);
-  
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 300));
-  
-  const lead = mockLeadsData.find(lead => lead.id === id);
-  return lead || null;
+  const db = await connectToMongoDB();
+  const collection = db.collection('leads');
+  return collection.findOne({ id });
 }
 
-// Simulate an async API call to fetch leads by stage
+// Fetch leads by stage from MongoDB
 export async function fetchLeadsByStage(): Promise<any[]> {
-  console.log('Fetching leads by stage');
-  
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 300));
-  
-  return mockStageData;
+  const db = await connectToMongoDB();
+  const collection = db.collection('leads');
+  return collection.aggregate([
+    { $group: { _id: { status_id: '$status_id', pipeline_id: '$pipeline_id' }, count: { $sum: 1 } } }
+  ]).toArray();
 }
