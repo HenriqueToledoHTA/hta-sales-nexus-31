@@ -7,6 +7,13 @@ export interface SalesStats {
   averageSale: number;
 }
 
+export interface TopSeller {
+  id: number;
+  name: string;
+  sales: number;
+  value: number;
+}
+
 export async function fetchSalesStats(): Promise<SalesStats> {
   try {
     // Get total sales (sum of price where price > 0)
@@ -38,6 +45,29 @@ export async function fetchSalesStats(): Promise<SalesStats> {
       totalCustomers: 0,
       averageSale: 0
     };
+  }
+}
+
+export async function fetchTopSellers(): Promise<TopSeller[]> {
+  try {
+    const { data, error } = await supabase
+      .from('seller_sales_summary')
+      .select('*')
+      .order('sales_total', { ascending: false })
+      .limit(5);
+    
+    if (error) throw error;
+    
+    // Transform the data to match the TopSeller interface
+    return data.map((seller, index) => ({
+      id: index + 1, // Setting position in ranking
+      name: seller.seller_name,
+      sales: seller.sales_count,
+      value: seller.sales_total
+    }));
+  } catch (error) {
+    console.error("Error fetching top sellers:", error);
+    return [];
   }
 }
 

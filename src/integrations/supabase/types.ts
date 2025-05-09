@@ -88,6 +88,13 @@ export type Database = {
             foreignKeyName: "leads_responsible_user_id_fkey"
             columns: ["responsible_user_id"]
             isOneToOne: false
+            referencedRelation: "seller_sales_summary"
+            referencedColumns: ["seller_id"]
+          },
+          {
+            foreignKeyName: "leads_responsible_user_id_fkey"
+            columns: ["responsible_user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
@@ -226,7 +233,15 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      seller_sales_summary: {
+        Row: {
+          sales_count: number | null
+          sales_total: number | null
+          seller_id: number | null
+          seller_name: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

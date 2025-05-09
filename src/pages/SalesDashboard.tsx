@@ -8,10 +8,14 @@ import RecentSales from "../components/dashboard/RecentSales";
 import ProductDistributionChart from "../components/dashboard/ProductDistributionChart";
 import DistributionPieChart from "../components/dashboard/DistributionPieChart";
 import SalesGoal from "../components/dashboard/SalesGoal";
-import { fetchSalesStats, formatCurrency } from "../services/salesService";
+import { 
+  fetchSalesStats, 
+  formatCurrency, 
+  fetchTopSellers, 
+  TopSeller 
+} from "../services/salesService";
 
 import {
-  topSellers,
   recentSales,
   productDistribution,
   professionDistribution,
@@ -21,6 +25,7 @@ import {
 
 export default function SalesDashboard() {
   const [isLoading, setIsLoading] = useState(true);
+  const [topSellersLoading, setTopSellersLoading] = useState(true);
   const [salesStats, setSalesStats] = useState({
     totalSales: 0,
     totalCustomers: 0,
@@ -29,11 +34,15 @@ export default function SalesDashboard() {
     customersChange: 0,
     averageChange: 0
   });
+  const [topSellers, setTopSellers] = useState<TopSeller[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
+      setTopSellersLoading(true);
+      
       try {
+        // Fetch sales stats
         const stats = await fetchSalesStats();
         
         // For now, we'll set changes to default values
@@ -48,6 +57,16 @@ export default function SalesDashboard() {
         console.error("Failed to load sales data:", error);
       } finally {
         setIsLoading(false);
+      }
+      
+      try {
+        // Fetch top sellers data
+        const sellers = await fetchTopSellers();
+        setTopSellers(sellers);
+      } catch (error) {
+        console.error("Failed to load top sellers data:", error);
+      } finally {
+        setTopSellersLoading(false);
       }
     };
     
@@ -118,7 +137,10 @@ export default function SalesDashboard() {
           <SalesGoal current={goalData.current} goal={goalData.goal} />
           
           {/* Top sellers table (swapped position) */}
-          <TopSellersTable sellers={topSellers} />
+          <TopSellersTable 
+            sellers={topSellers} 
+            isLoading={topSellersLoading} 
+          />
         </div>
       </div>
     </DashboardLayout>
