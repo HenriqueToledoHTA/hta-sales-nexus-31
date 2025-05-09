@@ -5,46 +5,46 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
+    --background: 0 0% 7%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 9.4%; /* Changed to #181818 */
+    --card: 0 0% 9.4%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 3.9%;
+    --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
 
-    /* Changed primary from hue 35 to amber 40 */
-    --primary: 40 90% 55%;
+    /* Amarelo alaranjado como cor primária (F5A623) */
+    --primary: 35 91% 55%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 3.7% 15.9%;
+    --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 65%;
 
-    /* Changed accent from hue 35 to amber 40 */
-    --accent: 40 90% 55%;
+    /* Amarelo alaranjado como cor de destaque */
+    --accent: 35 91% 55%;
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 40 90% 55%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 35 91% 55%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 240 10% 3.9%;
+    --sidebar-background: 0 0% 7%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 40 90% 55%;
+    --sidebar-primary: 35 91% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 0 0% 20%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 40 90% 55%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 35 91% 55%;
   }
 }
 
@@ -73,7 +73,7 @@
   }
 
   .card-gradient {
-    @apply bg-gradient-to-b from-[#181818]/95 to-[#181818]/80; /* Updated to use #181818 */
+    @apply bg-gradient-to-b from-[#181818]/95 to-[#181818]/80;
   }
 
   .card-highlight {

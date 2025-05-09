@@ -35,7 +35,7 @@ export default function LeadsFunnelMetrics() {
         <Card 
           key={index} 
           className={cn(
-            "bg-card border-hta-gray-dark overflow-hidden", // Updated from bg-hta-dark-card to bg-card
+            "bg-card border-hta-gray-dark overflow-hidden",
             metric.highlight ? "border-l-4 border-l-hta-highlight" : "",
             metric.negative ? "border-l-4 border-l-red-500" : ""
           )}

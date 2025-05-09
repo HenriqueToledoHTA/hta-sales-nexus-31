@@ -65,12 +65,12 @@ export default {
 				},
 				// Custom theme colors
 				hta: {
-					// Amber as the new highlight color (from the screenshots)
+					// Amarelo alaranjado como cor de destaque (F5A623)
 					highlight: '#F5A623',
 					'highlight-hover': '#E69710',
 					dark: '#121212',
-					'dark-card': '#181818', // Updated to #181818
-					'dark-card-hover': '#252525',
+					'dark-card': '#181818',
+					'dark-card-hover': '#222222',
 					'gray-dark': '#333333',
 					'gray-medium': '#666666',
 					'gray-light': '#999999',
