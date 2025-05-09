@@ -56,8 +56,3 @@ export default function LeadsFunnelMetrics() {
     </div>
   );
 }
-
-// Helper function to conditionally join class names
-function cn(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
