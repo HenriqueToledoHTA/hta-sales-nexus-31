@@ -8,7 +8,7 @@
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
 
-    --card: 240 10% 3.9%;
+    --card: 0 0% 9.4%; /* Changed to #181818 */
     --card-foreground: 0 0% 98%;
 
     --popover: 240 10% 3.9%;
@@ -73,7 +73,7 @@
   }
 
   .card-gradient {
-    @apply bg-gradient-to-b from-hta-dark-card/95 to-hta-dark-card/80;
+    @apply bg-gradient-to-b from-[#181818]/95 to-[#181818]/80; /* Updated to use #181818 */
   }
 
   .card-highlight {

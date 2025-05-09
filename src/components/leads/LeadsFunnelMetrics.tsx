@@ -1,5 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export default function LeadsFunnelMetrics() {
   const metrics = [
@@ -34,7 +35,7 @@ export default function LeadsFunnelMetrics() {
         <Card 
           key={index} 
           className={cn(
-            "bg-hta-dark-card border-hta-gray-dark overflow-hidden",
+            "bg-card border-hta-gray-dark overflow-hidden", // Updated from bg-hta-dark-card to bg-card
             metric.highlight ? "border-l-4 border-l-hta-highlight" : "",
             metric.negative ? "border-l-4 border-l-red-500" : ""
           )}

@@ -69,7 +69,7 @@ export default {
 					highlight: '#F5A623',
 					'highlight-hover': '#E69710',
 					dark: '#121212',
-					'dark-card': '#1E1E1E',
+					'dark-card': '#181818', // Updated to #181818
 					'dark-card-hover': '#252525',
 					'gray-dark': '#333333',
 					'gray-medium': '#666666',
