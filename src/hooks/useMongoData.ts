@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { fetchLeads, fetchLeadsByStage } from '../services/mongoService';
 import { useToast } from "@/components/ui/use-toast";

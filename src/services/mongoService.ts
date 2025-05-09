@@ -1,4 +1,5 @@
 import { MongoClient, ServerApiVersion, Collection, Db } from 'mongodb';
+import { Lead } from '../hooks/useMongoData';
 
 // Use hardcoded connection string for now
 const uri = "mongodb+srv://thiagocleonel:xYfRNhzKILEqB7Zn@test-n8n.u3tbtnr.mongodb.net/";
@@ -57,7 +58,8 @@ export async function getLeadsCollection(): Promise<Collection> {
 }
 
 // Function to fetch leads data
-export async function fetchLeads(limit = 20, skip = 0): Promise<any[]> {
+export async function fetchLeads(limit = 20, skip = 0): Promise<Lead[]> {
+  console.log(`Fetching leads with limit: ${limit}, skip: ${skip}`);
   try {
     const collection = await getLeadsCollection();
     const results = await collection.find({}).limit(limit).skip(skip).toArray();
@@ -70,7 +72,8 @@ export async function fetchLeads(limit = 20, skip = 0): Promise<any[]> {
 }
 
 // Function to fetch lead by ID
-export async function fetchLeadById(id: number): Promise<any | null> {
+export async function fetchLeadById(id: number): Promise<Lead | null> {
+  console.log(`Fetching lead with ID: ${id}`);
   try {
     const collection = await getLeadsCollection();
     const result = await collection.findOne({ id });
@@ -84,6 +87,7 @@ export async function fetchLeadById(id: number): Promise<any | null> {
 
 // Function to fetch leads count for each pipeline stage
 export async function fetchLeadsByStage(): Promise<any[]> {
+  console.log('Fetching leads by stage');
   try {
     const collection = await getLeadsCollection();
     const pipeline = [
