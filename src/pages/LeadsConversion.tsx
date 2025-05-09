@@ -17,14 +17,16 @@ export default function LeadsConversion() {
           </p>
         </div>
         
+        {/* Metrics first */}
+        <LeadsFunnelMetrics />
+        
         {/* Two-column layout for funnel visualization and transitions */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <FunnelVisualization />
           <FunnelTransitions />
         </div>
         
-        {/* Metrics and table below */}
-        <LeadsFunnelMetrics />
+        {/* Table below */}
         <RecentLeadsTable />
       </div>
     </DashboardLayout>
