@@ -122,8 +122,11 @@ export default function SalesDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left column */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Product distribution chart (swapped position) */}
-          <ProductDistributionChart data={productDistribution} />
+          {/* Top sellers table (swapped position with product distribution) */}
+          <TopSellersTable 
+            sellers={topSellers} 
+            isLoading={topSellersLoading} 
+          />
           
           {/* Distribution pie charts */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -153,11 +156,8 @@ export default function SalesDashboard() {
           {/* Sales goal */}
           <SalesGoal current={goalData.current} goal={goalData.goal} />
           
-          {/* Top sellers table (swapped position) */}
-          <TopSellersTable 
-            sellers={topSellers} 
-            isLoading={topSellersLoading} 
-          />
+          {/* Product distribution chart (swapped position with top sellers) */}
+          <ProductDistributionChart data={productDistribution} />
         </div>
       </div>
     </DashboardLayout>

@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -71,7 +70,7 @@
   }
 
   .card-gradient {
-    @apply bg-gradient-to-b from-hta-dark-card to-hta-dark-card/90;
+    @apply bg-gradient-to-b from-hta-dark-card/95 to-hta-dark-card/80;
   }
 
   .card-highlight {
