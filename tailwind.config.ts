@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom theme colors
+				hta: {
+					// Burnt yellow as highlight color
+					highlight: '#F5A623',
+					'highlight-hover': '#E69710',
+					dark: '#121212',
+					'dark-card': '#1E1E1E',
+					'dark-card-hover': '#252525',
+					'gray-dark': '#333333',
+					'gray-medium': '#666666',
+					'gray-light': '#999999',
+					success: '#4CAF50',
+					danger: '#F44336',
+					info: '#2196F3',
 				}
 			},
 			borderRadius: {
@@ -84,11 +100,16 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-subtle': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.8' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-subtle': 'pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 			}
 		}
 	},

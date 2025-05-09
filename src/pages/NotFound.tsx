@@ -1,5 +1,7 @@
-import { useLocation } from "react-router-dom";
+
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
+import DashboardLayout from "../components/layout/DashboardLayout";
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,15 +14,15 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
+    <DashboardLayout>
+      <div className="flex flex-col items-center justify-center h-[70vh]">
+        <h1 className="text-6xl font-bold text-hta-highlight mb-4">404</h1>
+        <p className="text-xl text-gray-300 mb-6">Página não encontrada</p>
+        <Link to="/" className="bg-hta-highlight text-black px-4 py-2 rounded-md hover:bg-hta-highlight-hover transition-colors">
+          Voltar ao Dashboard
+        </Link>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
