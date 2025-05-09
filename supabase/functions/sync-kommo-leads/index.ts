@@ -2,13 +2,13 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.23.0";
 
-// CORS headers for browser access
+// CORS headers para acesso no navegador
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Define types for better code quality
+// Define tipos para melhorar a qualidade do código
 interface KommoLead {
   id: number;
   name: string;
@@ -39,29 +39,37 @@ interface KommoApiResponse {
 }
 
 serve(async (req: Request) => {
-  // Handle CORS preflight requests
+  console.log("Função sync-kommo-leads chamada", { method: req.method });
+  
+  // Lidar com solicitações CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // Get environment variables
+    // Obter variáveis de ambiente
     const kommoApiToken = Deno.env.get("KOMMO_API_TOKEN");
     const supabaseUrl = Deno.env.get("SUPABASE_URL") || "https://ujxennrfkatyxgevlecb.supabase.co";
     const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqeGVubnJma2F0eXhnZXZsZWNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY4MDMxNjAsImV4cCI6MjA2MjM3OTE2MH0.Ftt-Er-gJDK_9J6uVFH5iwpoJKMKR-fACp-qp0I9cZg";
 
+    console.log("Verificando configurações", { 
+      temToken: Boolean(kommoApiToken), 
+      temSupabaseUrl: Boolean(supabaseUrl), 
+      temSupabaseKey: Boolean(supabaseAnonKey) 
+    });
+
     if (!kommoApiToken) {
-      throw new Error("KOMMO_API_TOKEN is required");
+      throw new Error("KOMMO_API_TOKEN é necessário");
     }
 
-    // Initialize Supabase client
+    // Inicializar cliente Supabase
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-    // Define the pipeline IDs to filter
+    // Definir os IDs de pipeline para filtrar
     const pipelineIds = [8289155, 10219280, 10219919];
     const limit = 250;
     
-    // Track statistics for logs
+    // Rastrear estatísticas para logs
     const stats = {
       totalLeads: 0,
       created: 0,
@@ -70,19 +78,19 @@ serve(async (req: Request) => {
       pages: 0
     };
 
-    // Initialize paging
+    // Inicializar paginação
     let currentPage = 1;
     let hasMorePages = true;
 
-    // Base URL for the Kommo API
+    // URL base para a API da Kommo
     const baseUrl = "https://hta.kommo.com/api/v4/leads";
 
-    // Fetch all pages of leads
+    // Buscar todas as páginas de leads
     while (hasMorePages) {
-      console.log(`Fetching page ${currentPage}...`);
+      console.log(`Buscando página ${currentPage}...`);
       stats.pages++;
 
-      // Build query params for the API request
+      // Construir parâmetros de consulta para a solicitação da API
       const queryParams = new URLSearchParams();
       pipelineIds.forEach((id, index) => {
         queryParams.append(`filter[pipeline_id][${index}]`, id.toString());
@@ -90,8 +98,11 @@ serve(async (req: Request) => {
       queryParams.append("page", currentPage.toString());
       queryParams.append("limit", limit.toString());
 
-      // Make the API request to Kommo
-      const response = await fetch(`${baseUrl}?${queryParams.toString()}`, {
+      const apiUrl = `${baseUrl}?${queryParams.toString()}`;
+      console.log("Chamando API Kommo:", apiUrl);
+
+      // Fazer a solicitação para a API da Kommo
+      const response = await fetch(apiUrl, {
         headers: {
           "Authorization": `Bearer ${kommoApiToken}`,
           "Content-Type": "application/json"
@@ -100,30 +111,33 @@ serve(async (req: Request) => {
 
       if (!response.ok) {
         const error = await response.text();
-        throw new Error(`Failed to fetch leads: ${response.status} - ${error}`);
+        console.error("Resposta de erro da API:", { status: response.status, body: error });
+        throw new Error(`Falha ao buscar leads: ${response.status} - ${error}`);
       }
 
-      // Parse the response
+      // Analisar a resposta
       const data = await response.json() as KommoApiResponse;
       const leads = data._embedded.leads;
       stats.totalLeads += leads.length;
 
-      console.log(`Retrieved ${leads.length} leads from page ${currentPage}`);
+      console.log(`Obtidos ${leads.length} leads da página ${currentPage}`);
 
-      // Process and upsert leads to Supabase
+      // Processar e inserir leads no Supabase
       for (const lead of leads) {
         try {
-          // Convert _links to string if it's an object
+          // Converter _links para string se for um objeto
           if (lead._links && typeof lead._links === 'object') {
             lead._links = JSON.stringify(lead._links);
           }
 
-          // Convert custom_fields_values to string if it's an object
+          // Converter custom_fields_values para string se for um objeto
           if (lead.custom_fields_values && typeof lead.custom_fields_values === 'object') {
             lead.custom_fields_values = JSON.stringify(lead.custom_fields_values);
           }
 
-          // Upsert lead to Supabase
+          console.log(`Processando lead ${lead.id}: ${lead.name}`);
+
+          // Inserir lead no Supabase
           const { error } = await supabase
             .from('leads')
             .upsert({
@@ -150,11 +164,11 @@ serve(async (req: Request) => {
             });
 
           if (error) {
-            console.error(`Error upserting lead ${lead.id}:`, error);
+            console.error(`Erro ao inserir lead ${lead.id}:`, error);
             stats.errors++;
           } else {
-            // If lead already existed, count as updated, otherwise as created
-            // Note: This is approximate as we don't have a way to know for sure if it was an insert or update
+            // Se o lead já existia, contar como atualizado, caso contrário como criado
+            // Nota: Isso é aproximado, pois não temos uma maneira de saber com certeza se foi uma inserção ou atualização
             if (currentPage === 1) {
               stats.created++;
             } else {
@@ -162,22 +176,24 @@ serve(async (req: Request) => {
             }
           }
         } catch (error) {
-          console.error(`Error processing lead ${lead.id}:`, error);
+          console.error(`Erro ao processar lead ${lead.id}:`, error);
           stats.errors++;
         }
       }
 
-      // Check if we need to fetch more pages
+      // Verificar se precisamos buscar mais páginas
       currentPage++;
-      // If current page is greater than total pages or no leads returned, stop
+      // Se a página atual for maior que o total de páginas ou nenhum lead retornado, parar
       hasMorePages = data._page && leads.length > 0;
     }
 
-    // Return success response with stats
+    console.log("Sincronização concluída com sucesso", stats);
+
+    // Retornar resposta de sucesso com estatísticas
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Leads sync completed successfully",
+        message: "Sincronização de leads concluída com sucesso",
         stats
       }),
       {
@@ -189,9 +205,9 @@ serve(async (req: Request) => {
       }
     );
   } catch (error) {
-    console.error("Error in sync-kommo-leads function:", error);
+    console.error("Erro na função sync-kommo-leads:", error);
     
-    // Return error response
+    // Retornar resposta de erro
     return new Response(
       JSON.stringify({
         success: false,

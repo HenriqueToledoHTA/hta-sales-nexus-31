@@ -31,11 +31,18 @@ const Index = () => {
     setResult(null);
     
     try {
+      console.log("Iniciando chamada para a função sync-kommo-leads");
+      
       const { data, error } = await supabase.functions.invoke('sync-kommo-leads', {
         method: 'POST',
       });
       
-      if (error) throw error;
+      console.log("Resposta recebida:", { data, error });
+      
+      if (error) {
+        console.error("Erro retornado pela função:", error);
+        throw error;
+      }
       
       setResult(data);
       
